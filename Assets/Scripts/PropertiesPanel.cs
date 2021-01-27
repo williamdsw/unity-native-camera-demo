@@ -86,8 +86,10 @@ public class PropertiesPanel : MonoBehaviour
 
     public void ShowImageProperties(string imageName, NativeCamera.ImageProperties properties)
     {
-        mimeTypeText.enabled = orientationText.enabled = true;
-        durationText.enabled = rotationText.enabled = false;
+        mimeTypeText.gameObject.SetActive(true);
+        orientationText.gameObject.SetActive(true);
+        durationText.gameObject.SetActive(false);
+        rotationText.gameObject.SetActive(false);
 
         mediaNameText.text = imageName;
         heightText.text = string.Format("Height: {0}", properties.height);
@@ -100,8 +102,10 @@ public class PropertiesPanel : MonoBehaviour
 
     public void ShowVideoProperties(string videoName, NativeCamera.VideoProperties properties)
     {
-        durationText.enabled = rotationText.enabled = true;
-        mimeTypeText.enabled = orientationText.enabled = false;
+        durationText.gameObject.SetActive(true);
+        rotationText.gameObject.SetActive(true);
+        mimeTypeText.gameObject.SetActive(false);
+        orientationText.gameObject.SetActive(false);
 
         mediaNameText.text = videoName;
         heightText.text = string.Format("Height: {0}", properties.height);

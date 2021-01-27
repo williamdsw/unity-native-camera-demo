@@ -119,8 +119,6 @@ public class DemoManager : MonoBehaviour
             }
 
         }, PICTURE_MAX_SIZE);
-
-        Debug.Log("TakePicture() -> permission: " + permission);
     }
 
     private void RecordVideo()
@@ -129,13 +127,10 @@ public class DemoManager : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(path) && !string.IsNullOrWhiteSpace(path))
             {
-                Debug.Log("RecordVideo() -> Path: " + path);
                 // TODO
                 ApplyMediaTreatment(path, false);
             }
         });
-
-        Debug.Log("RecordVideo() -> permission: " + permission);
     }
 
     private void ApplyMediaTreatment(string path, bool isPicture)

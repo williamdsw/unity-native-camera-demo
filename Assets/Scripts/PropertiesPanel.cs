@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +6,7 @@ using UnityEngine.UI;
 public class PropertiesPanel : MonoBehaviour
 {
     // || Inspector References
+
     [SerializeField] private DemoManager demoManager;
 
     [Header("UI Elements")]
@@ -20,6 +19,10 @@ public class PropertiesPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI durationText;
     [SerializeField] private TextMeshProUGUI rotationText;
     [SerializeField] private Button closeButton;
+
+    // || Config
+
+    private string NoInformationText => "There's no information to be displayed about this media!";
 
     private void Awake()
     {
@@ -86,32 +89,63 @@ public class PropertiesPanel : MonoBehaviour
 
     public void ShowImageProperties(string imageName, NativeCamera.ImageProperties properties)
     {
-        mimeTypeText.gameObject.SetActive(true);
-        orientationText.gameObject.SetActive(true);
-        durationText.gameObject.SetActive(false);
-        rotationText.gameObject.SetActive(false);
-
         mediaNameText.text = imageName;
-        heightText.text = string.Format("Height: {0}", properties.height);
-        widthText.text = string.Format("Width: {0}", properties.width);
-        mimeTypeText.text = string.Format("MimeType: {0}", properties.mimeType);
-        orientationText.text = string.Format("Orientation: {0}", properties.orientation);
+
+        if (!string.IsNullOrEmpty(properties.mimeType))
+        {
+            mimeTypeText.gameObject.SetActive(true);
+            orientationText.gameObject.SetActive(true);
+            durationText.gameObject.SetActive(false);
+            rotationText.gameObject.SetActive(false);
+
+            heightText.text = string.Format("Height: {0}", properties.height);
+            widthText.text = string.Format("Width: {0}", properties.width);
+            mimeTypeText.text = string.Format("MimeType: {0}", properties.mimeType);
+            orientationText.text = string.Format("Orientation: {0}", properties.orientation);
+        }
+        else
+        {
+            mimeTypeText.gameObject.SetActive(false);
+            orientationText.gameObject.SetActive(false);
+            durationText.gameObject.SetActive(false);
+            rotationText.gameObject.SetActive(false);
+            heightText.gameObject.SetActive(true);
+            widthText.gameObject.SetActive(true);
+
+            heightText.text = string.Empty;
+            widthText.text = NoInformationText;
+        }
 
         panel.SetActive(true);
     }
 
     public void ShowVideoProperties(string videoName, NativeCamera.VideoProperties properties)
     {
-        durationText.gameObject.SetActive(true);
-        rotationText.gameObject.SetActive(true);
-        mimeTypeText.gameObject.SetActive(false);
-        orientationText.gameObject.SetActive(false);
+        if (properties.duration != 0L)
+        {
+            durationText.gameObject.SetActive(true);
+            rotationText.gameObject.SetActive(true);
+            mimeTypeText.gameObject.SetActive(false);
+            orientationText.gameObject.SetActive(false);
 
-        mediaNameText.text = videoName;
-        heightText.text = string.Format("Height: {0}", properties.height);
-        widthText.text = string.Format("Width: {0}", properties.width);
-        durationText.text = string.Format("Duration: {0}", properties.duration);
-        rotationText.text = string.Format("Rotation: {0}", properties.rotation);
+            mediaNameText.text = videoName;
+            heightText.text = string.Format("Height: {0}", properties.height);
+            widthText.text = string.Format("Width: {0}", properties.width);
+            durationText.text = string.Format("Duration: {0}", properties.duration);
+            rotationText.text = string.Format("Rotation: {0}", properties.rotation);
+        }
+        else
+        {
+            durationText.gameObject.SetActive(false);
+            rotationText.gameObject.SetActive(false);
+            mimeTypeText.gameObject.SetActive(false);
+            orientationText.gameObject.SetActive(false);
+            heightText.gameObject.SetActive(true);
+            widthText.gameObject.SetActive(true);
+
+            heightText.text = string.Empty;
+            widthText.text = NoInformationText;
+        }
 
         panel.SetActive(true);
     }

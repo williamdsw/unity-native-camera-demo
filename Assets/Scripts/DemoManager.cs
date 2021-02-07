@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -127,7 +125,6 @@ public class DemoManager : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(path) && !string.IsNullOrWhiteSpace(path))
             {
-                // TODO
                 ApplyMediaTreatment(path, false);
             }
         });
@@ -169,7 +166,6 @@ public class DemoManager : MonoBehaviour
             playVideoButton.onClick.AddListener(() =>
             {
                 string filePath = string.Format("file://{0}", path);
-                Debug.Log("FilePath: " + filePath);
                 Handheld.PlayFullScreenMovie(filePath);
             });
         }
@@ -181,8 +177,6 @@ public class DemoManager : MonoBehaviour
         {
             string message = "Couldn't load texture from {0} !";
             message = string.Format(message, path);
-
-            Debug.LogError(message);
 
             if (message.Length >= 43)
             {
